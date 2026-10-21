@@ -1,0 +1,751 @@
+<title>Surface</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: phone shell (max 480px) mirroring the Surface website build: sticky blurred header with the
+   SURFACE / SKIN HABIT lockup, blush hero panel with the white S-line mark, white cards, full-width bottom tab bar.
+   Tokens are the website's own (website/assets/style.css). Light only, like the site. */
+:root{
+  --bg:#FBF7F4; --panel:#F4E3DD; --panel-soft:#F8EEEA; --card:#FFFFFF;
+  --ink:#1E1917; --ink-soft:#4A3F3A; --muted:#7A6B65; --line:#EADBD4;
+  --accent:#9B5A47; --accent-deep:#874838; --accent-ink:#FFF7F3;
+  --wa:#25D366; --ok:#2F7A54; --ok-soft:#E4F1E8; --warn:#A8651D; --warn-soft:#FBEDD6; --bad:#B23F33; --bad-soft:#F8E1DD;
+  --shadow:0 1px 2px rgba(60,30,20,.04),0 10px 30px -18px rgba(60,30,20,.18);
+  --font:"Gotham","Gotham A","Gotham B","Montserrat",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  --r:22px; --r-sm:14px;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
+button,input,textarea,select{font:inherit;color:inherit}
+button{cursor:pointer;background:none;border:0;padding:0}
+a{color:var(--accent)}
+h1,h2,h3{margin:0;font-weight:600;line-height:1.15;letter-spacing:-.02em;text-wrap:balance}
+h1{font-size:30px}
+h2{font-size:22px}
+h3{font-size:17px;letter-spacing:-.01em}
+p{margin:0}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+#app{max-width:480px;margin:0 auto;min-height:100%;display:flex;flex-direction:column;position:relative;background:var(--bg)}
+@media (min-width:520px){ body{background:var(--panel-soft)} #app{box-shadow:0 0 0 1px var(--line);min-height:100vh} }
+
+/* header (site-header) */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(251,247,244,.86);backdrop-filter:saturate(1.3) blur(10px);-webkit-backdrop-filter:saturate(1.3) blur(10px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;padding:0 18px;height:68px}
+.logo{display:flex;align-items:center;gap:10px;color:var(--ink);text-decoration:none}
+.logo img{width:22px;height:36px;object-fit:contain}
+.logo .wm2{display:flex;flex-direction:column;line-height:1}
+.logo .l1{font-weight:600;font-size:19px;letter-spacing:.32em;margin-right:-.32em}
+.logo .l2{font-weight:600;font-size:8.5px;letter-spacing:.3em;margin-top:5px;color:var(--ink-soft)}
+.top .ttl{font-weight:600;font-size:17px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;letter-spacing:-.01em}
+.top .sp{flex:1}
+.ib{width:44px;height:44px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;position:relative;color:var(--ink);background:#fff;border:1px solid var(--line)}
+.ib svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ib .dot{position:absolute;top:-5px;right:-5px;min-width:19px;height:19px;border-radius:10px;background:var(--accent);color:var(--accent-ink);font-size:10.5px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 5px;border:2px solid var(--bg)}
+
+/* view */
+#view{flex:1;padding:18px 18px calc(96px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:16px;min-width:0;animation:enter .25s ease}
+@keyframes enter{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.stack{display:flex;flex-direction:column;gap:10px}
+.row{display:flex;align-items:center;gap:10px;min-width:0}
+.row>*{min-width:0}
+.grow{flex:1}
+.eyebrow{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.lead{font-size:16.5px;color:var(--ink-soft);line-height:1.6}
+.muted{color:var(--muted)}
+.small{font-size:14px}
+.tiny{font-size:12.5px}
+.b{font-weight:600}
+.num{font-variant-numeric:tabular-nums}
+.center{text-align:center}
+
+/* hero-card */
+.hero-card{position:relative;overflow:hidden;background:var(--panel);border-radius:28px;padding:26px 22px 22px;display:flex;flex-direction:column;gap:14px}
+.hero-card .mark{position:absolute;right:-60px;top:-50px;width:240px;height:240px;opacity:.55;pointer-events:none}
+.hero-card .mark path{stroke:#fff;stroke-width:2.5;fill:none;stroke-linecap:round}
+.hero-card>*{position:relative}
+.hero-card h1{font-size:30px}
+.hero-aside{background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.9);border-radius:20px;padding:16px 18px;display:flex;flex-direction:column;gap:10px}
+.trust{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13.5px;color:var(--muted)}
+.trust b{color:var(--ink);font-weight:600}
+
+/* cards */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px;box-shadow:var(--shadow)}
+.card.panel{background:var(--panel);border-color:transparent;box-shadow:none}
+.card.soft{background:var(--panel-soft);border-color:transparent;box-shadow:none}
+.card.flat{box-shadow:none}
+.card.accent{background:var(--accent);color:var(--accent-ink);border-color:transparent;position:relative;overflow:hidden;border-radius:28px}
+.card.accent .muted,.card.accent .eyebrow{color:rgba(255,247,243,.78)}
+.card.accent .wm{position:absolute;right:-50px;top:-50px;width:220px;height:220px;opacity:.25;pointer-events:none}
+.card.accent .wm path{stroke:#fff;stroke-width:2.5;fill:none;stroke-linecap:round}
+.card.accent .btn.soft{background:rgba(255,255,255,.16);color:var(--accent-ink);border-color:rgba(255,255,255,.3)}
+.card h2+p,.card h3+p{margin-top:4px}
+.sec{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-top:10px}
+.sec h2{font-size:22px}
+.link{color:var(--accent);font-weight:600;font-size:14px;background:none;text-decoration:none}
+.list{display:flex;flex-direction:column}
+.list>.it{display:flex;align-items:center;gap:14px;padding:14px 0;border-top:1px solid var(--line);text-align:left;width:100%;min-width:0;color:inherit;text-decoration:none}
+.list>.it:first-child{border-top:0}
+.it .body{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+.it .body .t{font-weight:600}
+.it .body .s{font-size:13px;color:var(--muted);line-height:1.45}
+.it .chev{color:var(--accent);flex:none}
+.it .chev svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.it .ico{width:44px;height:44px;border-radius:50%;background:var(--panel);color:var(--accent);display:flex;align-items:center;justify-content:center;flex:none}
+.it .ico svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+ul.clean{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:7px}
+ul.clean li{display:flex;gap:10px;align-items:flex-start;line-height:1.5}
+ul.clean li:before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);flex:none;margin-top:8px}
+.nsteps{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:12px}
+.nsteps li{display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start;font-size:14.5px;color:var(--ink-soft)}
+.nsteps b{display:inline-flex;width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;align-items:center;justify-content:center;font-size:14px;font-weight:600}
+
+/* pills */
+.pill{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:500;background:var(--panel-soft);color:var(--accent-deep);white-space:nowrap}
+.pill.ok{background:var(--ok-soft);color:var(--ok)}
+.pill.warn{background:var(--warn-soft);color:var(--warn)}
+.pill.bad{background:var(--bad-soft);color:var(--bad)}
+.pill.acc{background:var(--panel);color:var(--accent-deep)}
+.pill.start,.pill.correct,.pill.refine{background:transparent;color:var(--accent);padding:0;font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.pill.ghost{background:#fff;color:var(--accent-deep)}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+
+/* buttons (site .btn) */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 22px;border-radius:999px;font-weight:600;font-size:15px;text-decoration:none;border:1.5px solid transparent;transition:transform .12s ease,background .12s ease,border-color .12s ease;min-height:50px;white-space:nowrap}
+.btn:active{transform:scale(.98)}
+.btn.primary{background:var(--accent);color:var(--accent-ink)}
+.btn.primary:hover{background:var(--accent-deep)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.hero-card .btn.ghost{border-color:rgba(255,255,255,.95);background:rgba(255,255,255,.35)}
+.btn.ghost:hover{border-color:var(--accent);color:var(--accent)}
+.btn.soft{background:var(--panel-soft);color:var(--ink)}
+.btn.wa{background:var(--ink);color:#fff}
+.btn.sm{padding:10px 16px;font-size:14px;min-height:42px}
+.btn.block{width:100%}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.btn svg.fill{fill:currentColor;stroke:none}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+.btns .btn{flex:1}
+
+/* photo cards */
+.ph{display:block;width:100%;background:var(--panel) center/cover no-repeat}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tile{display:flex;flex-direction:column;text-align:left;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);min-width:0;transition:transform .15s ease,border-color .15s ease}
+.tile:active{transform:scale(.985)}
+.tile .ph{aspect-ratio:4/3}
+.tile .tb{padding:12px 14px 14px;display:flex;flex-direction:column;gap:3px}
+.tile .t{font-weight:600;font-size:15.5px;letter-spacing:-.01em}
+.tile .s{font-size:12.5px;color:var(--muted);line-height:1.4}
+.tile .l{font-size:13px;font-weight:600;color:var(--accent);margin-top:6px}
+.circ{width:38px;height:38px;border-radius:50%;background:var(--panel-soft);display:inline-flex;align-items:center;justify-content:center;color:var(--accent);flex:none}
+.circ svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* progress */
+.dots{display:flex;gap:5px}
+.dots i{flex:1;height:8px;border-radius:4px;background:var(--line)}
+.dots i.on{background:var(--accent)}
+.dots i.next{background:var(--panel);outline:1.5px dashed var(--accent);outline-offset:-1.5px}
+.bar{height:8px;border-radius:4px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:4px}
+.ring{width:80px;height:80px;position:relative;flex:none}
+.ring svg{width:80px;height:80px;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:7;stroke-linecap:round}
+.ring .bgc{stroke:var(--panel)}
+.ring .fgc{stroke:var(--accent)}
+.ring .lbl{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1}
+.ring .lbl b{font-size:19px;font-weight:600}
+.ring .lbl span{font-size:10px;color:var(--muted);margin-top:3px}
+
+/* bottom tab bar (site wa-bar) */
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;justify-content:center;pointer-events:none}
+.tabs .in{pointer-events:auto;width:100%;max-width:480px;background:rgba(251,247,244,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px))}
+.tabs button{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 2px;font-size:10.5px;font-weight:600;color:var(--muted)}
+.tabs button .ti{width:46px;height:30px;border-radius:15px;display:flex;align-items:center;justify-content:center;transition:background .15s}
+.tabs button svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.tabs button.on{color:var(--accent)}
+.tabs button.on .ti{background:var(--panel)}
+
+/* wizard */
+.steps{display:flex;gap:4px}
+.steps i{flex:1;height:4px;border-radius:2px;background:var(--line)}
+.steps i.on{background:var(--accent)}
+.opt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:14px 16px;border-radius:18px;border:1px solid var(--line);background:var(--card);color:var(--ink);min-width:0;box-shadow:var(--shadow);transition:border-color .12s}
+.opt.sel{background:var(--panel);border-color:transparent;outline:1.5px solid var(--accent)}
+.opt .body{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.opt .t{font-weight:600}
+.opt .s{font-size:13px;color:var(--muted);line-height:1.45}
+.opt .price{font-weight:600;font-size:13.5px;white-space:nowrap;color:var(--ink)}
+.opt .av{width:48px;height:48px;border-radius:50%;background:var(--panel) center/cover no-repeat;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:15px;color:var(--accent);flex:none;overflow:hidden}
+.opt .th{width:72px;height:56px;border-radius:12px;background:var(--panel) center/cover no-repeat;flex:none}
+.opt .chev{color:var(--accent)}
+.opt .chev svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ctabs{display:flex;gap:6px;overflow-x:auto;padding:2px 18px 6px;margin:0 -18px;scrollbar-width:none}
+.ctabs::-webkit-scrollbar{display:none}
+.ctabs button{padding:9px 16px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:14px;font-weight:600;white-space:nowrap;color:var(--ink)}
+.ctabs button.on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.days{display:flex;gap:8px;overflow-x:auto;padding:4px 18px 8px;margin:0 -18px;scrollbar-width:none}
+.days::-webkit-scrollbar{display:none}
+.days button{flex:none;width:58px;padding:9px 4px;border-radius:16px;border:1px solid var(--line);background:#fff;display:flex;flex-direction:column;align-items:center;gap:1px;color:var(--ink)}
+.days button .d{font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+.days button .n{font-size:19px;font-weight:600}
+.days button .m{font-size:10.5px;color:var(--muted)}
+.days button.on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.days button.on .d,.days button.on .m{color:rgba(255,247,243,.8)}
+.days button.sug:not(.on){border:1.5px dashed var(--accent)}
+.times{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.times button{padding:10px 4px;border-radius:999px;border:1px solid var(--line);background:#fff;font-weight:600;font-size:14px;color:var(--ink)}
+.times button.on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.times button:disabled{opacity:.35;text-decoration:line-through;cursor:not-allowed}
+textarea.ta,input.in{width:100%;border:1px solid var(--line);border-radius:14px;padding:12px 14px;background:#fff;resize:vertical;min-height:46px}
+textarea.ta:focus,input.in:focus{border-color:var(--accent);outline:none}
+.kv{display:grid;grid-template-columns:100px 1fr;gap:8px 12px;font-size:14.5px}
+.kv dt{color:var(--muted)}
+.kv dd{margin:0;font-weight:600;min-width:0;overflow-wrap:anywhere}
+.notice{display:flex;gap:10px;padding:13px 15px;border-radius:14px;font-size:13.5px;align-items:flex-start;line-height:1.5}
+.notice.warn{background:var(--warn-soft);color:var(--warn)}
+.notice.ok{background:var(--ok-soft);color:var(--ok)}
+.notice.info{background:var(--panel-soft);color:var(--ink-soft)}
+.notice svg{width:18px;height:18px;flex:none;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;margin-top:1px}
+
+/* chat */
+.chat{display:flex;flex-direction:column;gap:8px;flex:1}
+.msg{max-width:84%;padding:11px 15px;border-radius:20px;font-size:14.5px;line-height:1.5;overflow-wrap:anywhere}
+.msg.me{align-self:flex-end;background:var(--accent);color:var(--accent-ink);border-bottom-right-radius:6px}
+.msg.dr{align-self:flex-start;background:#fff;border:1px solid var(--line);border-bottom-left-radius:6px}
+.msg.sys{align-self:center;background:transparent;color:var(--muted);font-size:12px;text-align:center;max-width:100%}
+.msg .ts{display:block;font-size:10.5px;opacity:.7;margin-top:4px}
+.msg img{max-width:100%;border-radius:12px;display:block;margin-bottom:6px}
+.composer{position:sticky;bottom:calc(74px + env(safe-area-inset-bottom,0px));display:flex;gap:8px;align-items:flex-end;background:var(--bg);padding-top:8px}
+.composer textarea{flex:1;border:1px solid var(--line);border-radius:24px;padding:12px 16px;background:#fff;resize:none;min-height:48px;max-height:120px}
+.composer label.att{width:48px;height:48px;border-radius:50%;background:#fff;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--accent);cursor:pointer;flex:none}
+.composer label.att input{display:none}
+.composer label.att svg,.composer .send svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.composer .send{width:48px;height:48px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:flex;align-items:center;justify-content:center;flex:none}
+.attprev{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted)}
+.attprev img{width:44px;height:44px;object-fit:cover;border-radius:10px}
+
+/* analysis */
+.aq-opts{display:flex;flex-direction:column;gap:8px}
+.aq-opt{text-align:left;padding:14px 16px;border-radius:16px;border:1px solid var(--line);background:#fff;color:var(--ink);font-weight:500}
+.aq-opt.sel{background:var(--panel);border-color:transparent;outline:1.5px solid var(--accent);font-weight:600}
+.aq-yn{flex-direction:row}
+.aq-yn .aq-opt{flex:1;text-align:center}
+
+/* loyalty */
+.tier{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:end}
+.tier .pts{font-size:44px;font-weight:600;line-height:1;letter-spacing:-.03em}
+.rewards{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.reward{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px;display:flex;flex-direction:column;gap:8px;text-align:left;color:var(--ink);box-shadow:var(--shadow);min-height:96px}
+.reward .t{font-weight:600;font-size:14px;line-height:1.3}
+.reward .c{font-size:12px;font-weight:700;color:var(--accent);margin-top:auto;letter-spacing:.04em}
+.reward:disabled{opacity:.45}
+.code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:700;letter-spacing:.14em;font-size:18px;background:#fff;border:1px solid var(--line);padding:10px 14px;border-radius:14px;display:inline-block}
+
+/* timeline */
+.tl{display:flex;flex-direction:column}
+.tl .ev{display:grid;grid-template-columns:18px 1fr;gap:12px;padding-bottom:18px;position:relative}
+.tl .ev:before{content:"";position:absolute;left:8px;top:18px;bottom:0;width:2px;background:var(--line)}
+.tl .ev:last-child:before{display:none}
+.tl .ev .pt{width:18px;height:18px;border-radius:50%;background:var(--panel);border:3px solid var(--accent);margin-top:2px}
+.tl .ev.past .pt{background:#fff;border-color:var(--line)}
+.tl .ev .body{min-width:0}
+
+/* toggle */
+.tg{position:relative;width:46px;height:28px;border-radius:14px;background:var(--line);flex:none;transition:background .15s}
+.tg i{position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:left .15s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.tg.on{background:var(--accent)}
+.tg.on i{left:21px}
+
+/* sheet + toast */
+#sheet{position:fixed;inset:0;z-index:50;display:none;align-items:flex-end;justify-content:center;background:rgba(30,25,23,.45)}
+#sheet.open{display:flex}
+#sheet .pane{width:100%;max-width:480px;background:var(--bg);border-radius:28px 28px 0 0;padding:14px 18px calc(22px + env(safe-area-inset-bottom,0px));max-height:85vh;overflow:auto;display:flex;flex-direction:column;gap:12px;animation:up .2s ease}
+#sheet .grab{width:40px;height:4px;border-radius:2px;background:var(--line);margin:0 auto 4px}
+@keyframes up{from{transform:translateY(24px);opacity:0}to{transform:none;opacity:1}}
+#toast{position:fixed;left:50%;bottom:calc(90px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:60;background:var(--ink);color:#fff;padding:11px 18px;border-radius:999px;font-size:13.5px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .2s;max-width:calc(100% - 32px);text-align:center}
+#toast.show{opacity:1}
+.av{width:44px;height:44px;border-radius:50%;background:var(--panel) center/cover no-repeat;display:flex;align-items:center;justify-content:center;font-weight:600;color:var(--accent);flex:none;overflow:hidden}
+.av.light{background-color:#fff}
+.hero-n{font-size:26px;font-weight:600;letter-spacing:-.02em;line-height:1.1}
+.demo{font-size:11.5px;color:var(--muted);text-align:center;padding:8px 0 0}
+</style>
+
+<div id="app">
+  <header class="top" id="top"></header>
+  <main id="view"></main>
+  <nav class="tabs" aria-label="Navigasi utama"><div class="in" id="tabs"></div></nav>
+  <div id="sheet" role="dialog" aria-modal="true"><div class="pane" id="sheetPane"></div></div>
+  <div id="toast" role="status" aria-live="polite"></div>
+</div>
+
+<script id="ssh-data" type="application/json">/*__DATA__*/</script>
+<script>
+(function(){
+'use strict';
+var D = JSON.parse(document.getElementById('ssh-data').textContent);
+var KEY = 'ssh-app-v2';
+var S;
+
+/* ---------- helpers ---------- */
+function pad(n){return (n<10?'0':'')+n;}
+function today(){var d=new Date();d.setHours(0,0,0,0);return d;}
+function addDays(d,n){var x=new Date(d);x.setDate(x.getDate()+n);return x;}
+function iso(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());}
+function pISO(s){var p=s.split('-');return new Date(+p[0],+p[1]-1,+p[2]);}
+var HARI=['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'], HARI3=['Min','Sen','Sel','Rab','Kam','Jum','Sab'];
+var BULAN=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'], BULAN3=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+function fd(s){var d=pISO(s);return HARI3[d.getDay()]+', '+d.getDate()+' '+BULAN3[d.getMonth()]+' '+d.getFullYear();}
+function fdl(s){var d=pISO(s);return HARI[d.getDay()]+', '+d.getDate()+' '+BULAN[d.getMonth()]+' '+d.getFullYear();}
+function fds(s){var d=pISO(s);return d.getDate()+' '+BULAN3[d.getMonth()];}
+function ft(t){return t.replace(':','.');}
+function days(s){return Math.round((pISO(s)-today())/86400000);}
+function rp(n){return n==null?'—':'Rp '+String(n).replace(/\B(?=(\d{3})+(?!\d))/g,'.');}
+function rpk(n){return n==null?'—':(n>=1000000?('Rp '+(n/1000000).toFixed(n%1000000?2:0).replace('.',',').replace(/,?0+$/,'')+' jt'):rp(n));}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function hash(s){var h=0;for(var i=0;i<s.length;i++){h=(h*31+s.charCodeAt(i))|0;}return Math.abs(h);}
+function initials(n){return n.replace(/^dr\.?\s*/i,'').split(/\s+/).slice(0,2).map(function(w){return w[0];}).join('').toUpperCase();}
+function clinic(code){return D.clinics.filter(function(c){return c.code===code;})[0]||D.clinics[0];}
+function offerByName(n){for(var i=0;i<D.concerns.length;i++){for(var j=0;j<D.concerns[i].offers.length;j++){if(D.concerns[i].offers[j].name===n)return D.concerns[i].offers[j];}}return null;}
+function concernOf(code){return D.concerns.filter(function(c){return c.code===code;})[0];}
+var PH=D.photos||{};function ph(k){return PH[k]?"background-image:url('"+PH[k]+"')":'';}
+function docPhoto(n){var d=D.doctors.filter(function(x){return x.name===n;})[0];return d&&d.photo?d.photo:'';}
+function avatar(n,cls){var p=docPhoto(n);return '<span class="'+(cls||'av')+'" style="'+(p?"background-image:url('"+p+"')":'')+'">'+(p?'':initials(n||'S'))+'</span>';}
+function wa(text){return 'https://wa.me/'+D.site.whatsapp_number+'?text='+encodeURIComponent(text);}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+function load(){try{var s=JSON.parse(localStorage.getItem(KEY));if(s&&s.v===2)return s;}catch(e){}return null;}
+function toast(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(function(){t.classList.remove('show');},2200);}
+function intervalDays(txt){var m=/(\d+)\s*(?:[–-]\s*(\d+))?\s*(minggu|bulan)/i.exec(txt||'');if(!m)return 14;var n=+m[1];return m[3].toLowerCase()==='bulan'?n*30:n*7;}
+function nowTs(){var d=new Date();return iso(d)+' '+pad(d.getHours())+':'+pad(d.getMinutes());}
+function fts(ts){var p=ts.split(' ');return fds(p[0])+' · '+ft(p[1]||'');}
+
+var I = {
+  home:'<svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>',
+  cal:'<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>',
+  pkg:'<svg viewBox="0 0 24 24"><path d="M4 7l8-4 8 4v10l-8 4-8-4z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg>',
+  chat:'<svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg>',
+  user:'<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>',
+  bell:'<svg viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4zM10 20a2 2 0 0 0 4 0"/></svg>',
+  back:'<svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>',
+  chev:'<svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>',
+  redo:'<svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/></svg>',
+  face:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 10h.01M15 10h.01"/></svg>',
+  star:'<svg viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg>',
+  map:'<svg viewBox="0 0 24 24"><path d="M12 21s-6-5.3-6-11a6 6 0 0 1 12 0c0 5.7-6 11-6 11z"/><circle cx="12" cy="10" r="2"/></svg>',
+  clip:'<svg viewBox="0 0 24 24"><path d="M9 4h6l1 2h3v14H5V6h3z"/><path d="M9 12l2 2 4-4"/></svg>',
+  leaf:'<svg viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-14-1 9-6 14-14 14z"/><path d="M5 19l8-8"/></svg>',
+  receipt:'<svg viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg>',
+  hist:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+  gift:'<svg viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="12" rx="2"/><path d="M3 13h18M12 9v12M12 9c-3 0-5-1-5-3s3-3 5 3c2-6 5-4 5-3s-2 3-5 3"/></svg>',
+  shield:'<svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>',
+  info:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>',
+  warn:'<svg viewBox="0 0 24 24"><path d="M12 3l10 18H2z"/><path d="M12 10v4M12 17h.01"/></svg>',
+  send:'<svg viewBox="0 0 24 24"><path d="M3 12l18-8-6 18-3-7z"/></svg>',
+  att:'<svg viewBox="0 0 24 24"><path d="M21 12l-8.5 8.5a5 5 0 0 1-7-7L14 5a3.5 3.5 0 0 1 5 5l-8.5 8.5a2 2 0 0 1-3-3L15 8"/></svg>',
+  check:'<svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg>',
+  wa:'<svg viewBox="0 0 24 24"><path d="M4 20l1.3-3.8A8 8 0 1 1 8 19z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1-1.5-2-1-1 1a4 4 0 0 1-2-2l1-1-1-2z"/></svg>',
+  sun:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4"/></svg>',
+  x:'<svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>'
+};
+
+/* ---------- demo state ---------- */
+function seed(){
+  var t=today();
+  function d(n){return iso(addDays(t,n));}
+  var cc=offerByName('Clear Correct'), ts=offerByName('Tone Start');
+  return {
+    v:2, seen:false, notifSeen:false,
+    user:{name:'Ayu Lestari',first:'Ayu',phone:'0812 •••• 4471',email:'ayu.l@contoh.id',since:'2025',clinic:'CITOS',doctor:'dr. Riska Melani',dob:'1994-03-12',skin:'Kombinasi',id:'SSH-2025-04117'},
+    packages:[
+      {id:'p1',offer:'Clear Correct',concern:'CLEAR',total:6,used:3,bought:d(-69),expires:d(115),price:9300000,clinic:'CITOS'},
+      {id:'p2',offer:'Tone Start',concern:'TONE',total:3,used:2,bought:d(-150),expires:d(26),price:4050000,clinic:'CITOS'}
+    ],
+    visits:[
+      {id:'v5',date:d(-10),offer:'Clear Correct',pkg:'p1',session:3,total:6,clinic:'CITOS',doctor:'dr. Riska Melani',includes:cc.includes,note:'Lesi aktif berkurang di pipi kiri. Lanjut interval 2 minggu. Tabir surya diulang siang hari.'},
+      {id:'v4',date:d(-28),offer:'Clear Correct',pkg:'p1',session:2,total:6,clinic:'CITOS',doctor:'dr. Riska Melani',includes:cc.includes,note:'Targeted Peel SA toleransi baik. PDT 20 menit ditambahkan. Add-on Acne Shots 2 titik.'},
+      {id:'v3',date:d(-49),offer:'Clear Correct',pkg:'p1',session:1,total:6,clinic:'CITOS',doctor:'dr. Riska Melani',includes:cc.includes,note:'Mulai program. Foto 3 sudut diambil. Rencana 12 minggu ditulis.'},
+      {id:'v2',date:d(-95),offer:'Tone Start',pkg:'p2',session:2,total:3,clinic:'CITOS',doctor:'dr. Riska Melani',includes:ts.includes,note:'Kulit lebih cerah. Komedo di hidung masih ada, bahas Clear di kunjungan berikut.'},
+      {id:'v1',date:d(-130),offer:'Tone Start',pkg:'p2',session:1,total:3,clinic:'CITOS',doctor:'dr. Riska Melani',includes:ts.includes,note:'Sesi pertama. Tidak ada reaksi.'},
+      {id:'v0',date:d(-150),offer:'Konsultasi dokter gratis',clinic:'CITOS',doctor:'dr. Riska Melani',includes:[],note:'Konsultasi awal. Keluhan: kusam dan komedo. Rencana: Tone Start 3 sesi, evaluasi, lalu jalur Clear.'}
+    ],
+    appointments:[{id:'a1',date:d(4),time:'14:00',what:'Clear Correct',pkg:'p1',session:4,total:6,clinic:'CITOS',doctor:'dr. Riska Melani',status:'confirmed',note:'',kind:'paket'}],
+    plan:{title:'Clear Correct · 6 sesi',by:'dr. Riska Melani',start:d(-49),review:d(35),interval:'tiap 2–3 minggu',goal:'Jerawat meradang reda, komedo berkurang, bekas gelap mulai memudar saat tinjauan minggu ke-12.',home:['Pembersih lembut pagi dan malam','Tabir surya SPF 30+, ulang tiap 2–3 jam di luar ruangan','Retinoid dijeda 3 hari setelah peeling','Jangan memencet lesi. Kirim foto lewat chat kalau ragu'],next:'Sesi 4: Hydraderm, Targeted Peel SA, PDT. Evaluasi apakah Acne Shots masih perlu.'},
+    points:1765, referrals:1, streak:3, redeemed:[],
+    pointLog:[{date:d(-9),label:'Ulasan Google untuk Surface CITOS',delta:100},{date:d(-28),label:'Add-on Acne Shots',delta:30},{date:d(-40),label:'Teman bergabung: Dinda R.',delta:300},{date:d(-69),label:'Clear Correct · paket 6 sesi',delta:930},{date:d(-150),label:'Tone Start · paket 3 sesi',delta:405}],
+    threads:{dr:[
+      {from:'me',ts:d(-9)+' 20:14',text:'Dok, setelah peeling kemarin pipi kiri agak perih dan merah. Normal nggak ya?'},
+      {from:'dr',ts:d(-9)+' 21:02',text:'Halo Ayu. Kemerahan ringan 1–2 hari setelah Targeted Peel itu wajar. Pakai pelembap sederhana, jangan scrub, dan tabir surya tetap. Kalau perih bertambah atau muncul lepuh, kabari saya lagi ya.'},
+      {from:'sys',ts:d(-9)+' 21:02',text:'Percakapan ini dicatat ke rekam medis kamu.'}
+    ]},
+    intake:{formA:d(-152),consent:d(-150),flags:{hamil:'tidak',obat:'tidak',riwayat:'tidak',lain:'tidak'},skincare:'Pembersih gentle, pelembap, SPF 50',event:''},
+    receipts:[
+      {id:'r3',date:d(-28),label:'Add-on Acne Shots (2 titik)',amount:300000,method:'QRIS',clinic:'CITOS',no:'CIT/26/09/0412'},
+      {id:'r2',date:d(-69),label:'Clear Correct · paket 6 sesi',amount:9300000,method:'Kartu debit',clinic:'CITOS',no:'CIT/26/08/0188'},
+      {id:'r1',date:d(-150),label:'Tone Start · paket 3 sesi',amount:4050000,method:'Transfer',clinic:'CITOS',no:'CIT/26/05/0291'}
+    ],
+    prefs:{remind:true,expiry:true,chat:true,promo:false},
+    analysis:null, booking:null, vouchers:[]
+  };
+}
+
+/* ---------- derived ---------- */
+var TIERS=[{code:'start',name:'Start',min:0},{code:'habit',name:'Habit',min:1000},{code:'glow',name:'Glow',min:5000}];
+function tierOf(p){var t=TIERS[0];TIERS.forEach(function(x){if(p>=x.min)t=x;});return t;}
+function nextTier(p){for(var i=0;i<TIERS.length;i++){if(p<TIERS[i].min)return TIERS[i];}return null;}
+function remaining(p){return Math.max(0,p.total-p.used);}
+function pkgStatus(p){var r=remaining(p),dd=days(p.expires);if(r===0)return {code:'done',label:'Selesai',cls:'ok'};if(dd<0)return {code:'expired',label:'Kedaluwarsa',cls:'bad'};if(dd<=30)return {code:'soon',label:'Berakhir '+dd+' hari lagi',cls:'warn'};return {code:'active',label:'Aktif',cls:'ok'};}
+function activePkgs(){return S.packages.filter(function(p){return remaining(p)>0&&days(p.expires)>=0;}).sort(function(a,b){return a.expires<b.expires?-1:1;});}
+function nextAppt(){return S.appointments.filter(function(a){return a.status==='confirmed'&&days(a.date)>=0;}).sort(function(a,b){return (a.date+a.time)<(b.date+b.time)?-1:1;})[0];}
+function lastVisit(){return S.visits[0];}
+function lastVisitOf(offer){return S.visits.filter(function(v){return v.offer===offer;})[0];}
+function devicesFor(includes){
+  var out=[];(includes||[]).forEach(function(inc){var li=inc.toLowerCase();D.treatments.forEach(function(t){if(!t.device)return;var tok=t.name.toLowerCase().split(/[^a-z0-9]+/).filter(function(w){return w.length>=3;})[0];if(tok&&li.indexOf(tok)>=0){var dev=D.devices.filter(function(d){return d.slug===t.device;})[0];if(dev&&out.indexOf(dev)<0)out.push(dev);}});});
+  return out;
+}
+function notifs(){
+  var n=[],a=nextAppt();
+  if(a)n.push({ico:I.cal,t:'Pengingat jadwal',s:a.what+(a.session?' sesi '+a.session+'/'+a.total:'')+' · '+fd(a.date)+' '+ft(a.time)+' · '+clinic(a.clinic).short,go:'home'});
+  S.packages.forEach(function(p){var st=pkgStatus(p);if(st.code==='soon')n.push({ico:I.pkg,t:p.offer+': '+remaining(p)+' sesi tersisa',s:'Berlaku sampai '+fd(p.expires)+'. Booking sekarang supaya tidak hangus.',go:'paket',warn:true});});
+  if(S.plan)n.push({ico:I.clip,t:'Tinjauan minggu ke-12',s:'Dengan '+S.plan.by+' · '+fd(S.plan.review)+'. Foto 3 sudut diulang untuk dibandingkan.',go:'plan'});
+  var th=S.threads.dr;for(var i=th.length-1;i>=0;i--){if(th[i].from==='dr'){n.push({ico:I.chat,t:S.user.doctor+' membalas chat kamu',s:th[i].text.slice(0,70)+'…',go:'chat'});break;}}
+  if(S.pointLog[0])n.push({ico:I.star,t:'+'+S.pointLog[0].delta+' poin',s:S.pointLog[0].label,go:'loyalty'});
+  return n;
+}
+
+/* ---------- router ---------- */
+var TABS=[{r:'home',l:'Beranda',i:I.home},{r:'booking',l:'Booking',i:I.cal},{r:'paket',l:'Paket',i:I.pkg},{r:'chat',l:'Chat',i:I.chat},{r:'akun',l:'Akun',i:I.user}];
+var TITLES={home:'',booking:'Booking',paket:'Paket & sesi',chat:'Chat dokter',akun:'Akun',analisis:'Analisis kulit',loyalty:'Surface Habit',aftercare:'Setelah treatment',riwayat:'Riwayat perawatan',notif:'Notifikasi',intake:'Form pra-kunjungan',struk:'Struk & pembayaran',plan:'Rencana dokter',klinik:'Klinik Surface'};
+var PARENT={analisis:'home',loyalty:'home',aftercare:'home',riwayat:'paket',notif:'home',intake:'akun',struk:'paket',plan:'home',klinik:'akun'};
+var R='home';
+function go(r){if(!TITLES.hasOwnProperty(r))r='home';if(location.hash!=='#'+r){location.hash='#'+r;}else render();}
+window.addEventListener('hashchange',function(){R=(location.hash||'#home').slice(1);if(!TITLES.hasOwnProperty(R))R='home';render();});
+
+function render(){
+  R=(location.hash||'#home').slice(1);if(!TITLES.hasOwnProperty(R))R='home';
+  var isTab=TABS.some(function(t){return t.r===R;});
+  var top=document.getElementById('top');
+  var unread=S.notifSeen?0:notifs().length;
+  top.innerHTML=(isTab?'<div class="logo">'+(PH.logo?'<img src="'+PH.logo+'" alt="">':'')+'<span class="wm2"><span class="l1">SURFACE</span><span class="l2">SKIN HABIT</span></span></div><span class="sp"></span>':'<button class="ib" data-act="back" aria-label="Kembali">'+I.back+'</button><div class="ttl">'+esc(TITLES[R])+'</div>')+
+    (R!=='notif'?'<button class="ib" data-go="notif" aria-label="Notifikasi">'+I.bell+(unread?'<span class="dot">'+unread+'</span>':'')+'</button>':'');
+  document.getElementById('tabs').innerHTML=TABS.map(function(t){var on=t.r===R||PARENT[R]===t.r;return '<button data-go="'+t.r+'" class="'+(on?'on':'')+'" aria-current="'+(on?'page':'false')+'"><span class="ti">'+t.i+'</span><span>'+t.l+'</span></button>';}).join('');
+  var v=document.getElementById('view');
+  v.innerHTML=(VIEWS[R]||VIEWS.home)();
+  window.scrollTo(0,0);
+  if(R==='chat'){var c=document.getElementById('chatEnd');if(c)c.scrollIntoView({block:'end'});}
+}
+
+/* ---------- views ---------- */
+var VIEWS={};
+
+VIEWS.home=function(){
+  var a=nextAppt(), lv=lastVisit(), tier=tierOf(S.points), ap=activePkgs(), h='';
+  var hr=new Date().getHours(), greet=hr<11?'Selamat pagi':hr<15?'Selamat siang':hr<18?'Selamat sore':'Selamat malam';
+  var MARK='<svg class="mark" viewBox="0 0 520 520" aria-hidden="true"><path d="M392 42c-78 18-150 70-150 140 0 90 150 100 150 190 0 70-80 118-170 118"/><path d="M412 20c-96 24-184 86-184 170 0 110 150 118 150 214 0 80-96 136-206 136"/><path d="M372 66c-62 14-120 56-120 112 0 72 150 82 150 166 0 56-62 96-134 96"/></svg>';
+  h+='<div class="hero-card">'+MARK+'<span class="eyebrow">'+greet+', '+esc(S.user.first)+'</span>';
+  if(a){
+    var dd=days(a.date), when=dd===0?'hari ini':dd===1?'besok':dd+' hari lagi';
+    h+='<h1>Sesi berikutnya '+when+'.</h1><p class="lead">'+esc(a.what)+(a.session?', sesi '+a.session+' dari '+a.total:'')+'. Dokter yang sama, interval yang sama.</p>'+
+      '<div class="hero-aside"><div class="row">'+avatar(a.doctor)+'<div class="grow"><div class="b">'+esc(HARI3[pISO(a.date).getDay()]+', '+fds(a.date))+' · '+esc(ft(a.time))+' WIB</div><div class="small muted">'+esc(clinic(a.clinic).name)+(a.doctor?' · '+esc(a.doctor):'')+'</div></div></div>'+
+      '<div class="btns"><button class="btn primary sm" data-act="appt" data-id="'+a.id+'">Ubah jadwal</button><a class="btn ghost sm" href="'+esc(clinic(a.clinic).maps)+'" target="_blank" rel="noopener">'+I.map+' Arah</a></div></div>';
+  } else {
+    h+='<h1>Kulit yang lebih baik dimulai dari kebiasaan.</h1><p class="lead">Pilih sesi berikutnya, atau mulai lagi dari konsultasi dokter gratis.</p><div class="btns"><button class="btn primary" data-act="rebook">Sesi berikutnya</button><button class="btn ghost" data-act="bookwhat" data-what="konsul">Konsultasi gratis</button></div>';
+  }
+  h+='<div class="trust"><span><b>'+ap.length+' paket</b> aktif</span><span><b>'+S.points.toLocaleString('id-ID')+'</b> poin '+esc(tier.name)+'</span><span><b>'+S.streak+' bulan</b> berturut-turut</span></div></div>';
+  h+='<div class="sec"><div><span class="eyebrow">Mulai di sini</span><h2 style="margin-top:6px">Mau apa hari ini?</h2></div></div>';
+  h+='<div class="tiles">'+
+    '<button class="tile" data-go="booking"><span class="ph" style="'+ph('booking')+'"></span><span class="tb"><span class="t">Booking</span><span class="s">Program, klinik dan slot. Konsultasi selalu gratis.</span><span class="l">Booking sekarang →</span></span></button>'+
+    '<button class="tile" data-act="rebook"><span class="ph" style="'+ph('rebook')+'"></span><span class="tb"><span class="t">Sesi berikutnya</span><span class="s">Lanjutkan paket di tanggal yang disarankan.</span><span class="l">Lanjut paket →</span></span></button>'+
+    '<button class="tile" data-go="analisis"><span class="ph" style="'+ph('analisis')+'"></span><span class="tb"><span class="t">Analisis kulit</span><span class="s">2 menit. Hasilnya jalur dan titik mulai.</span><span class="l">Mulai analisis →</span></span></button>'+
+    '<button class="tile" data-go="chat"><span class="ph" style="'+ph('chat')+'"></span><span class="tb"><span class="t">Chat dokter</span><span class="s">Tanya di antara kunjungan. Dibalas 1×24 jam.</span><span class="l">Buka chat →</span></span></button></div>';
+  if(ap.length){
+    h+='<div class="sec"><div><span class="eyebrow">Paket & sesi</span><h2 style="margin-top:6px">Perjalanan kulitmu</h2></div><button class="link" data-go="paket">Semua</button></div>';
+    ap.slice(0,2).forEach(function(p){var st=pkgStatus(p),pct=p.used/p.total,C=2*Math.PI*33;
+      h+='<button class="card" style="text-align:left;width:100%" data-go="paket"><div class="row" style="gap:16px"><div class="ring"><svg viewBox="0 0 80 80"><circle class="bgc" cx="40" cy="40" r="33"/><circle class="fgc" cx="40" cy="40" r="33" stroke-dasharray="'+C.toFixed(1)+'" stroke-dashoffset="'+(C*(1-pct)).toFixed(1)+'"/></svg><div class="lbl"><b>'+p.used+'/'+p.total+'</b><span>sesi</span></div></div>'+
+        '<div class="grow"><h3>'+esc(p.offer)+'</h3><div class="small muted">'+remaining(p)+' sesi tersisa · sampai '+esc(fds(p.expires))+'</div><div style="margin-top:8px"><span class="pill '+st.cls+'">'+esc(st.label)+'</span></div></div><span class="circ">'+I.chev+'</span></div></button>';});
+  }
+  if(S.plan){var wk=Math.max(1,Math.ceil((today()-pISO(S.plan.start))/604800000));h+='<button class="card soft" style="text-align:left;width:100%" data-go="plan"><span class="eyebrow">Rencana dokter · minggu ke-'+wk+' dari 12</span><h3 style="margin-top:8px">'+esc(S.plan.title)+'</h3><p class="small muted" style="margin-top:4px">'+esc(S.plan.goal)+'</p><div class="bar" style="margin-top:14px;background:#fff"><i style="width:'+Math.min(100,Math.round(wk/12*100))+'%"></i></div><div class="row" style="margin-top:12px;justify-content:space-between"><span class="small">Tinjauan '+esc(fd(S.plan.review))+' · '+esc(S.plan.by)+'</span><span class="circ" style="background:#fff">'+I.chev+'</span></div></button>';}
+  h+='<div class="list card" style="padding:4px 20px">';
+  if(lv&&lv.includes&&lv.includes.length){var ad=days(lv.date);h+='<button class="it" data-go="aftercare"><span class="ico">'+I.leaf+'</span><span class="body"><span class="t">Setelah '+esc(lv.offer)+'</span><span class="s">'+(-ad)+' hari lalu · yang boleh dan belum boleh</span></span><span class="chev">'+I.chev+'</span></button>';}
+  h+='<button class="it" data-go="riwayat"><span class="ico">'+I.hist+'</span><span class="body"><span class="t">Riwayat perawatan</span><span class="s">'+S.visits.length+' kunjungan · catatan dokter tiap sesi</span></span><span class="chev">'+I.chev+'</span></button>'+
+    '<button class="it" data-go="loyalty"><span class="ico">'+I.gift+'</span><span class="body"><span class="t">Surface Habit · '+esc(tier.name)+'</span><span class="s">'+S.points.toLocaleString('id-ID')+' poin · tukar dengan add-on</span></span><span class="chev">'+I.chev+'</span></button></div>';
+  h+='<div class="demo">Akun contoh · data demo tersimpan di perangkat ini</div>';
+  return h;
+};
+
+/* ---- booking wizard ---- */
+function B(){if(!S.booking)S.booking={step:1,what:null,offer:null,pkg:null,clinic:S.user.clinic,doctor:S.user.doctor,date:null,time:null,note:'',editId:null,tab:'CLEAR',first:null};return S.booking;}
+function slotsFor(date,cl,doc){var out=[],t=today(),now=new Date();for(var h=10;h<=19;h++){var free=(hash(date+cl+(doc||'')+h)%10)>2;if(iso(t)===date&&h<=now.getHours())free=false;out.push({t:pad(h)+':00',free:free});}return out;}
+function suggestDate(b){var off=b.offer?offerByName(b.offer):null,lv=b.offer?lastVisitOf(b.offer):null,min=off?intervalDays(off.interval):14;var base=lv?addDays(pISO(lv.date),min):addDays(today(),1);if(base<addDays(today(),1))base=addDays(today(),1);return iso(base);}
+function bookingLabel(b){if(b.what==='konsul')return 'Konsultasi dokter gratis';if(b.what==='first')return b.first+' · kunjungan pertama';return b.offer||'';}
+
+VIEWS.booking=function(){
+  var b=B(),h='',st=b.step;
+  h+='<div class="steps">'+[1,2,3,4,5].map(function(i){return '<i class="'+(i<=st?'on':'')+'"></i>';}).join('')+'</div>';
+  if(st>1){var sum=[bookingLabel(b),st>2?clinic(b.clinic).short:null,st>3?(b.doctor||'Dokter yang tersedia'):null,st>4?fd(b.date)+' '+ft(b.time):null].filter(Boolean);h+='<div class="chips">'+sum.map(function(s){return '<span class="pill">'+esc(s)+'</span>';}).join('')+'</div>';}
+  if(st===1){
+    var ap=activePkgs();
+    h+='<h1>Mau booking apa?</h1>';
+    if(ap.length){h+='<div class="eyebrow">Lanjutkan paket</div><div class="stack">'+ap.map(function(p){var sug;return '<button class="opt'+(b.what==='paket'&&b.pkg===p.id?' sel':'')+'" data-act="pickpkg" data-id="'+p.id+'"><span class="body"><span class="t">'+esc(p.offer)+' · sesi '+(p.used+1)+' dari '+p.total+'</span><span class="s">'+remaining(p)+' sesi tersisa · berlaku sampai '+esc(fds(p.expires))+'</span></span><span class="chev">'+I.chev+'</span></button>';}).join('')+'</div>';}
+    h+='<div class="eyebrow">Mulai dari dokter</div><button class="opt'+(b.what==='konsul'?' sel':'')+'" data-act="bookwhat" data-what="konsul"><span class="av">'+I.face.replace('<svg','<svg style="width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8"')+'</span><span class="body"><span class="t">'+esc(D.front_door.name)+'</span><span class="s">'+esc(D.front_door.desc)+'</span></span><span class="price">Gratis</span></button>';
+    h+='<div class="eyebrow">Pilih program</div><div class="ctabs">'+D.concerns.map(function(c){return '<button data-act="ctab" data-c="'+c.code+'" class="'+(b.tab===c.code?'on':'')+'">'+esc(c.name)+'</button>';}).join('')+'</div>';
+    var con=concernOf(b.tab);
+    h+='<p class="small muted">'+esc(con.title)+'. '+esc(con.intro)+'</p><div class="stack">'+con.offers.map(function(o){var lv=D.levels.filter(function(l){return l.code===o.level;})[0];return '<button class="opt'+(b.what==='program'&&b.offer===o.name?' sel':'')+'" data-act="pickoffer" data-o="'+esc(o.name)+'"><span class="body"><span class="row"><span class="t">'+esc(o.name)+'</span><span class="pill '+o.level+'">'+esc(lv?lv.name:o.level)+'</span></span><span class="s">'+esc(o.includes.join(' · '))+'</span><span class="s">'+(o.duration_min?o.duration_min+' menit · ':'')+esc(o.interval||'')+'</span></span><span class="price">'+(o.single===0?'Gratis':o.single?rpk(o.single):'Tanya dokter')+'</span></button>';}).join('')+'</div>';
+    h+='<div class="eyebrow">'+esc(D.first_visit.title)+'</div><p class="small muted">'+esc(D.first_visit.note)+'</p><div class="stack">'+D.first_visit.items.map(function(f){return '<button class="opt'+(b.what==='first'&&b.first===f.name?' sel':'')+'" data-act="pickfirst" data-n="'+esc(f.name)+'"><span class="body"><span class="t">'+esc(f.name)+'</span><span class="s">'+esc(f.for)+'</span></span><span class="price">'+rpk(f.price)+'</span></button>';}).join('')+'</div>';
+    h+='<p class="tiny muted">'+esc(D.site.price_note)+'</p>';
+  }
+  if(st===2){
+    h+='<h1>Klinik mana?</h1><div class="stack">'+D.clinics.map(function(c){return '<button class="opt'+(b.clinic===c.code?' sel':'')+'" data-act="pickclinic" data-c="'+c.code+'"><span class="th" style="'+ph('clinic_'+c.code)+'"></span><span class="body"><span class="t">'+esc(c.name)+'</span><span class="s">'+esc(c.landmark||c.area)+' · '+esc(c.hours)+'</span></span>'+(c.code===S.user.clinic?'<span class="pill acc">Klinik saya</span>':'')+'</button>';}).join('')+'</div>';
+  }
+  if(st===3){
+    var docs=D.doctors.filter(function(d){return d.clinics.length===0||d.clinics.indexOf(b.clinic)>=0;});
+    h+='<h1>Dengan dokter siapa?</h1><p class="small muted">Dokter yang menentukan treatment-mu, bukan tim sales. Konsultasi dokter selalu gratis.</p><div class="stack">'+docs.map(function(d){return '<button class="opt'+(b.doctor===d.name?' sel':'')+'" data-act="pickdoc" data-d="'+esc(d.name)+'">'+avatar(d.name)+'<span class="body"><span class="t">'+esc(d.name)+'</span><span class="s">'+esc(d.focus.join(' · '))+'</span></span>'+(d.name===S.user.doctor?'<span class="pill acc">Dokter saya</span>':'')+'</button>';}).join('')+
+      '<button class="opt'+(b.doctor===''?' sel':'')+'" data-act="pickdoc" data-d=""><span class="av">?</span><span class="body"><span class="t">Dokter mana saja yang tersedia</span><span class="s">Slot lebih banyak, terutama akhir pekan</span></span></button></div>';
+  }
+  if(st===4){
+    var sug=suggestDate(b),lv=b.offer?lastVisitOf(b.offer):null,off=b.offer?offerByName(b.offer):null;
+    if(!b.date)b.date=sug;
+    var t=today(),daysH='';for(var i=1;i<=21;i++){var d=addDays(t,i),s=iso(d);daysH+='<button data-act="pickdate" data-d="'+s+'" class="'+(b.date===s?'on':'')+(s===sug?' sug':'')+'"><span class="d">'+HARI3[d.getDay()]+'</span><span class="n">'+d.getDate()+'</span><span class="m">'+BULAN3[d.getMonth()]+'</span></button>';}
+    h+='<h1>Kapan?</h1>';
+    if(lv&&off)h+='<div class="notice info">'+I.info+'<span>Sesi terakhir '+esc(fds(lv.date))+'. Interval '+esc(off.interval)+', jadi tanggal yang disarankan <b>'+esc(fd(sug))+'</b> (bergaris putus).</span></div>';
+    h+='<div class="days">'+daysH+'</div><div class="b">'+esc(fdl(b.date))+'</div><div class="times">'+slotsFor(b.date,b.clinic,b.doctor).map(function(s){return '<button data-act="picktime" data-t="'+s.t+'" class="'+(b.time===s.t?'on':'')+'"'+(s.free?'':' disabled')+'>'+ft(s.t)+'</button>';}).join('')+'</div><p class="tiny muted">Jam klinik '+esc(clinic(b.clinic).hours)+'. Slot yang dicoret sudah penuh.</p>';
+    h+='<button class="btn primary block" data-act="next"'+(b.time?'':' disabled')+'>Lanjut</button>';
+  }
+  if(st===5){
+    var off5=b.offer?offerByName(b.offer):null,pk=b.pkg?S.packages.filter(function(p){return p.id===b.pkg;})[0]:null,price=b.what==='konsul'?'Gratis':b.what==='paket'?'Dari paket ('+remaining(pk)+' sesi tersisa)':b.what==='first'?rp(D.first_visit.items.filter(function(f){return f.name===b.first;})[0].price):off5?(off5.single===0?'Gratis':off5.single?rp(off5.single)+' satuan, atau pilih paket 3x/6x di klinik':'Ditentukan dokter'):'';
+    h+='<h1>Cek lagi</h1><div class="card"><dl class="kv"><dt>Treatment</dt><dd>'+esc(bookingLabel(b))+(pk?' · sesi '+(pk.used+1)+' dari '+pk.total:'')+'</dd><dt>Klinik</dt><dd>'+esc(clinic(b.clinic).name)+'</dd><dt>Dokter</dt><dd>'+esc(b.doctor||'Dokter yang tersedia')+'</dd><dt>Waktu</dt><dd>'+esc(fdl(b.date))+' · '+esc(ft(b.time))+' WIB</dd><dt>Durasi</dt><dd>'+(b.what==='konsul'?'30':off5&&off5.duration_min?off5.duration_min:'60')+' menit</dd><dt>Biaya</dt><dd>'+esc(price)+'</dd></dl></div>';
+    h+='<label class="stack"><span class="eyebrow">Catatan untuk klinik (opsional)</span><textarea class="ta" id="bnote" rows="2" placeholder="Misal: mau tanya soal bekas jerawat di pipi kanan">'+esc(b.note)+'</textarea></label>';
+    h+=S.intake.formA?'<div class="notice ok">'+I.check+'<span>Form pra-kunjungan sudah lengkap ('+esc(fds(S.intake.formA))+'). Perbarui kalau ada obat baru, hamil, atau treatment di tempat lain.</span></div>':'<div class="notice warn">'+I.warn+'<span>Form pra-kunjungan belum diisi. Isi 3 menit supaya dokter bisa memilih tindakan yang aman.</span></div>';
+    h+='<div class="notice info">'+I.info+'<span>Datang 10 menit lebih awal tanpa makeup di area yang akan ditangani. Ubah jadwal paling lambat H-1 lewat aplikasi atau WhatsApp.</span></div>';
+    h+='<button class="btn primary block" data-act="confirm">'+(b.editId?'Simpan jadwal baru':'Konfirmasi booking')+'</button>';
+  }
+  if(st===6){
+    var a=S.appointments.filter(function(x){return x.id===b.editId;})[0]||nextAppt();
+    var msg='Halo Surface, saya '+S.user.name+' ('+S.user.id+') sudah booking lewat aplikasi: '+a.what+', '+fdl(a.date)+' '+ft(a.time)+' di '+clinic(a.clinic).name+(a.doctor?' dengan '+a.doctor:'')+'. Mohon konfirmasi ya.';
+    h+='<div class="card panel center stack"><div class="av" style="margin:0 auto;width:56px;height:56px;background:var(--ok-soft);color:var(--ok)">'+I.check.replace('<svg','<svg style="width:28px;height:28px;stroke:currentColor;fill:none;stroke-width:2.5"')+'</div><h1>Booking tersimpan</h1><p class="small">'+esc(a.what)+'<br>'+esc(fdl(a.date))+' · '+esc(ft(a.time))+' WIB<br>'+esc(clinic(a.clinic).name)+(a.doctor?' · '+esc(a.doctor):'')+'</p><p class="small muted">Klinik mengonfirmasi lewat WhatsApp. Pengingat dikirim H-1 dan 2 jam sebelum.</p></div>';
+    h+='<a class="btn wa block" href="'+wa(msg)+'" target="_blank" rel="noopener">'+I.wa+' Kirim konfirmasi ke WhatsApp</a>';
+    if(!S.intake.formA)h+='<button class="btn ghost block" data-go="intake">Isi form pra-kunjungan (3 menit)</button>';
+    h+='<button class="btn soft block" data-act="bookdone">Kembali ke beranda</button>';
+  }
+  if(st>1&&st<6)h+='<button class="btn ghost block" data-act="prev">Kembali</button>';
+  return h;
+};
+
+/* ---- packages / ledger ---- */
+VIEWS.paket=function(){
+  var h='',sorted=S.packages.slice().sort(function(a,b){return a.expires<b.expires?-1:1;});
+  h+='<div class="notice info">'+I.info+'<span>Saldo sesi dicatat di klinik setiap kali treatment selesai dan dikonfirmasi terapis. Kalau ada dua paket aktif, sesi diambil dari paket yang paling dulu berakhir.</span></div>';
+  sorted.forEach(function(p){var st=pkgStatus(p),off=offerByName(p.offer),dots='';for(var i=0;i<p.total;i++){dots+='<i class="'+(i<p.used?'on':i===p.used&&st.code!=='expired'?'next':'')+'"></i>';}
+    h+='<div class="card"><div class="row"><div class="grow"><div class="b" style="font-size:16px">'+esc(p.offer)+'</div><div class="small muted">'+esc(off?off.includes.join(' · '):'')+'</div></div><span class="pill '+st.cls+'">'+esc(st.label)+'</span></div>'+
+      '<div class="dots" style="margin:12px 0 8px">'+dots+'</div><div class="row small"><span class="grow"><b>'+remaining(p)+'</b> sesi tersisa dari '+p.total+'</span><span class="muted num">'+esc(fds(p.bought))+' → '+esc(fd(p.expires))+'</span></div>'+
+      (st.code==='soon'?'<div class="notice warn" style="margin-top:10px">'+I.warn+'<span>Sisa sesi hangus setelah '+esc(fd(p.expires))+'. Butuh perpanjangan? Tanya dokter atau tim klinik lewat chat.</span></div>':'')+
+      (remaining(p)>0&&st.code!=='expired'?'<div class="btns" style="margin-top:12px"><button class="btn primary sm" data-act="pickpkg" data-id="'+p.id+'">Booking sesi '+(p.used+1)+'</button><a class="btn ghost sm" href="'+wa('Halo Surface, saya '+S.user.name+' mau tanya soal paket '+p.offer+' saya ('+remaining(p)+' sesi tersisa, berlaku sampai '+fd(p.expires)+').')+'" target="_blank" rel="noopener">Tanya klinik</a></div>':'')+'</div>';});
+  h+='<div class="list card flat" style="padding:4px 16px"><button class="it" data-go="riwayat"><span class="ico">'+I.hist+'</span><span class="body"><span class="t">Riwayat sesi & catatan dokter</span><span class="s">'+S.visits.length+' kunjungan</span></span><span class="chev">'+I.chev+'</span></button><button class="it" data-go="struk"><span class="ico">'+I.receipt+'</span><span class="body"><span class="t">Struk & pembayaran</span><span class="s">'+S.receipts.length+' transaksi · total '+rpk(S.receipts.reduce(function(a,r){return a+r.amount;},0))+'</span></span><span class="chev">'+I.chev+'</span></button><div class="it"><span class="ico">'+I.gift+'</span><span class="body"><span class="t">Kredit toko</span><span class="s">Rp 0 · dari penukaran poin atau sisa paket yang dikonversi</span></span></div></div>';
+  var pl=D.plan;h+='<div class="card panel"><div class="eyebrow">Langganan bulanan</div><h2>'+esc(pl.title)+'</h2><p class="small" style="margin-top:6px">'+rpk(pl.price_month)+' / bulan, minimal '+pl.min_months+' bulan.</p><ul class="clean small" style="margin-top:8px">'+pl.includes.map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul><a class="btn ghost sm" style="margin-top:12px" href="'+wa('Halo Surface, saya '+S.user.name+' tertarik dengan '+pl.title+'. Boleh dijelaskan?')+'" target="_blank" rel="noopener">Tanya lewat WhatsApp</a></div>';
+  return h;
+};
+
+VIEWS.riwayat=function(){
+  var h='<div class="notice info">'+I.shield+'<span>Ini ringkasan dari rekam medis elektronik klinik. Foto klinis 3 sudut diambil di klinik dan dilihat bersama dokter, tidak dikirim lewat chat.</span></div><div class="tl">';
+  S.visits.forEach(function(v){h+='<div class="ev past"><span class="pt"></span><div class="body"><div class="row"><div class="grow"><div class="b">'+esc(v.offer)+(v.session?' · sesi '+v.session+'/'+v.total:'')+'</div><div class="small muted">'+esc(fd(v.date))+' · '+esc(clinic(v.clinic).short)+' · '+esc(v.doctor)+'</div></div></div>'+(v.includes&&v.includes.length?'<div class="tiny muted" style="margin-top:4px">'+esc(v.includes.join(' · '))+'</div>':'')+(v.note?'<div class="card soft small" style="margin-top:8px;padding:10px 12px"><span class="eyebrow">Catatan dokter</span><br>'+esc(v.note)+'</div>':'')+(v.offer!=='Konsultasi dokter gratis'?'<button class="btn ghost sm" style="margin-top:8px" data-act="rebookv" data-id="'+v.id+'">'+I.redo+' Booking ulang</button>':'')+'</div></div>';});
+  return h+'</div>';
+};
+
+VIEWS.struk=function(){
+  return '<div class="list card flat" style="padding:4px 16px">'+S.receipts.map(function(r){return '<button class="it" data-act="receipt" data-id="'+r.id+'"><span class="ico">'+I.receipt+'</span><span class="body"><span class="t">'+esc(r.label)+'</span><span class="s">'+esc(fd(r.date))+' · '+esc(r.method)+' · '+esc(clinic(r.clinic).short)+'</span></span><span class="b num">'+rp(r.amount)+'</span></button>';}).join('')+'</div><p class="tiny muted">Harga berlaku sama di semua klinik Surface. Struk resmi diterbitkan oleh entitas klinik tempat transaksi.</p>';
+};
+
+VIEWS.plan=function(){
+  var p=S.plan;if(!p)return '<p class="muted">Belum ada rencana tertulis. Dokter menuliskannya saat konsultasi.</p>';
+  var wk=Math.max(1,Math.ceil((today()-pISO(p.start))/604800000)),pct=Math.min(100,Math.round(wk/12*100));
+  return '<div class="card accent"><div class="eyebrow">Ditulis oleh '+esc(p.by)+' · '+esc(fds(p.start))+'</div><h1>'+esc(p.title)+'</h1><p class="small" style="margin-top:6px">'+esc(p.goal)+'</p><div class="bar" style="margin-top:14px;background:color-mix(in srgb,var(--hero-ink) 20%,transparent)"><i style="width:'+pct+'%;background:var(--hero-chip)"></i></div><div class="tiny" style="margin-top:6px">Minggu ke-'+wk+' dari 12 · tinjauan '+esc(fd(p.review))+'</div></div>'+
+    '<div class="card"><h3>Interval</h3><p class="small muted">'+esc(p.interval)+'. Pengingat dikirim saat jendela interval terbuka.</p><h3 style="margin-top:12px">Berikutnya</h3><p class="small muted">'+esc(p.next)+'</p></div>'+
+    '<div class="card"><h3>Perawatan di rumah</h3><ul class="clean small" style="margin-top:8px">'+p.home.map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul></div>'+
+    '<div class="btns"><button class="btn primary" data-act="rebook">Booking sesi berikutnya</button><button class="btn ghost" data-go="chat">Tanya dokter</button></div>';
+};
+
+VIEWS.aftercare=function(){
+  var v=lastVisit(),devs=devicesFor(v.includes),h='';
+  h+='<div class="card panel"><div class="eyebrow">Setelah '+esc(v.offer)+' · '+esc(fd(v.date))+'</div><h2>'+(days(v.date)===0?'Hari ini':(-days(v.date))+' hari setelah sesi')+'</h2><p class="small muted" style="margin-top:4px">Urutan dari catatan edukasi Surface untuk alat yang dipakai di sesimu. Kalau catatan dokter berbeda, ikuti catatan dokter.</p></div>';
+  if(!devs.length)h+='<p class="muted small">Tidak ada pantangan khusus untuk sesi ini. Tabir surya seperti biasa.</p>';
+  devs.forEach(function(d){h+='<div class="card"><h3>'+esc(d.name)+'</h3><p class="small muted" style="margin-top:2px">Downtime: '+esc(d.downtime||'tidak ada')+'</p><ul class="clean small" style="margin-top:10px">'+(d.aftercare||[]).map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul></div>';});
+  h+='<div class="card soft"><h3>Hubungi dokter kalau</h3><ul class="clean small" style="margin-top:8px"><li>Perih atau merah bertambah setelah 48 jam, bukan berkurang</li><li>Muncul lepuh, nanah, atau bengkak yang tidak biasa</li><li>Gatal menyeluruh atau ruam di luar area yang ditangani</li></ul><div class="btns" style="margin-top:12px"><button class="btn primary sm" data-go="chat">Chat dokter</button><a class="btn ghost sm" href="'+wa('Halo Surface, saya '+S.user.name+'. Setelah '+v.offer+' tanggal '+fd(v.date)+' saya mengalami: ')+'" target="_blank" rel="noopener">WhatsApp klinik</a></div></div>';
+  return h;
+};
+
+/* ---- analysis ---- */
+var AQ=null,Aans={},Astep=0;
+function aqList(){if(AQ)return AQ;AQ=[];D.assessment.blocks.forEach(function(b){b.questions.forEach(function(q){q.block=b;AQ.push(q);});});return AQ;}
+function aqConcern(){var q1=aqList()[0],o=(q1.options||[]).filter(function(x){return x.v===Aans.q1;})[0];return o&&o.concern?o.concern:'TONE';}
+function aqOptions(q){if(q.options_by_concern)return q.options_by_concern[aqConcern()]||[];return q.options||[];}
+VIEWS.analisis=function(){
+  var Q=aqList(),h='';
+  if(S.analysis&&Astep===0&&!Aans.q1){var r=S.analysis;h+='<div class="card panel"><div class="eyebrow">Hasil terakhir · '+esc(fd(r.date))+'</div><div class="b">'+esc(r.concernName)+' → '+esc(r.offer)+'</div><div class="small muted">'+esc(r.offerIncludes)+'</div><div class="btns" style="margin-top:10px"><button class="btn primary sm" data-act="bookoffer" data-o="'+esc(r.offer)+'">Booking</button><button class="btn ghost sm" data-act="aqreset">Ulangi analisis</button></div></div>';}
+  if(Astep>=Q.length)return h+aqResult();
+  var q=Q[Astep],pct=Math.round(Astep/Q.length*100);
+  h+='<div class="bar"><i style="width:'+pct+'%"></i></div><div class="eyebrow">'+esc(q.block.code)+' · '+esc(q.block.title)+' · '+(Astep+1)+' dari '+Q.length+'</div>';
+  if(q.block.intro&&q.block.questions[0]===q)h+='<p class="small muted">'+esc(q.block.intro)+'</p>';
+  h+='<h1 style="font-size:21px">'+esc(q.text)+'</h1>'+(q.help?'<p class="small muted">'+esc(q.help)+'</p>':'');
+  if(q.type==='single'||q.type==='multi'){h+='<div class="aq-opts">'+aqOptions(q).map(function(o){var sel=q.type==='multi'?(Aans[q.id]||[]).indexOf(o.v)>=0:Aans[q.id]===o.v;return '<button class="aq-opt'+(sel?' sel':'')+'" data-act="aqopt" data-v="'+esc(o.v)+'">'+esc(o.label)+'</button>';}).join('')+'</div>';}
+  else if(q.type==='yesno'){h+='<div class="aq-opts aq-yn"><button class="aq-opt'+(Aans[q.id]==='ya'?' sel':'')+'" data-act="aqopt" data-v="ya">Ya</button><button class="aq-opt'+(Aans[q.id]==='tidak'?' sel':'')+'" data-act="aqopt" data-v="tidak">Tidak</button></div>';}
+  else if(q.type==='text'){h+='<textarea class="ta" id="aqtext" rows="3" placeholder="'+esc(q.placeholder||'')+'">'+esc(Aans[q.id]||'')+'</textarea>';}
+  var optional=q.type==='text'||q.type==='multi';
+  h+='<div class="btns">'+(Astep>0?'<button class="btn ghost" data-act="aqback">Kembali</button>':'')+'<button class="btn primary" data-act="aqnext"'+(optional||Aans[q.id]?'':' disabled')+'>'+(optional&&!Aans[q.id]?'Lewati':'Lanjut')+'</button></div>';
+  if(Astep===0)h+='<p class="tiny muted">'+esc(D.assessment.subtitle)+'</p>';
+  return h;
+};
+function aqResult(){
+  var Q=aqList(),code=aqConcern(),con=concernOf(code),q2=Q[1],o2=aqOptions(q2).filter(function(x){return x.v===Aans.q2;})[0],off=o2&&o2.offer?offerByName(o2.offer):con.offers[0],q9=Q.filter(function(q){return q.id==='q9';})[0],o9=q9?(q9.options||[]).filter(function(x){return x.v===Aans.q9;})[0]:null,planKey=o9?o9.plan:'single';
+  var flags=Q.filter(function(q){return q.type==='yesno'&&Aans[q.id]==='ya';}).map(function(q){return q.flag;});
+  var price=planKey==='consult'?'Konsultasi dulu, gratis':planKey==='single'?(off.single?rp(off.single)+' satuan':'Ditentukan dokter'):off[planKey]?rp(off[planKey])+' · '+(planKey==='pack3'?3:6)+' sesi':(off.single?rp(off.single)+' satuan (paket '+(planKey==='pack3'?'3':'6')+'x tidak tersedia untuk program ini)':'Ditentukan dokter');
+  S.analysis={date:iso(today()),concern:code,concernName:con.name+' · '+con.title,offer:off.name,offerIncludes:off.includes.join(' · '),plan:planKey,flags:flags};save();
+  var lv=D.levels.filter(function(l){return l.code===off.level;})[0];
+  var h='<div class="eyebrow">Hasil analisis</div><div class="card accent"><div class="eyebrow">Concern yang paling cocok</div><h1>'+esc(con.name)+'</h1><p class="small" style="margin-top:4px">'+esc(con.title)+'</p></div>';
+  h+='<div class="card"><div class="row"><div class="grow"><div class="eyebrow">Titik mulai yang biasanya disarankan</div><h2>'+esc(off.name)+'</h2></div><span class="pill '+off.level+'">'+esc(lv?lv.name:off.level)+'</span></div><p class="small muted" style="margin-top:6px">'+esc(lv?lv.blurb:'')+'</p><ul class="clean small" style="margin-top:10px">'+off.includes.map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul><dl class="kv" style="margin-top:12px"><dt>Durasi</dt><dd>'+(off.duration_min||'—')+' menit</dd><dt>Interval</dt><dd>'+esc(off.interval||'ditentukan dokter')+'</dd><dt>Pilihanmu</dt><dd>'+esc(price)+'</dd></dl></div>';
+  if(flags.length)h+='<div class="notice warn">'+I.warn+'<span>Dokter akan memeriksa dulu: '+esc(flags.join('; '))+'. Jawaban "ya" tidak berarti tidak bisa treatment, hanya menentukan tindakan mana yang aman.</span></div>';
+  h+='<div class="card soft"><div class="row"><span class="ico" style="width:40px;height:40px;border-radius:12px;background:var(--card);display:flex;align-items:center;justify-content:center;color:var(--muted)">'+I.face+'</span><div class="grow"><div class="b">Foto wajah (segera)</div><div class="small muted">Skor pigmentasi, kerataan warna, flek dan tekstur dari foto. Aktif setelah vendor analisis terlisensi.</div></div></div></div>';
+  h+='<p class="tiny muted">'+esc(D.assessment.disclaimer)+'</p>';
+  h+='<div class="stack"><button class="btn primary block" data-act="bookoffer" data-o="'+esc(off.name)+'">Booking '+(planKey==='consult'?'konsultasi gratis':off.name)+'</button><button class="btn ghost block" data-act="aqsend">Kirim hasil ke '+esc(S.user.doctor)+'</button><button class="btn soft block" data-act="aqreset">Ulangi analisis</button></div>';
+  return h;
+}
+
+/* ---- chat ---- */
+var pendingImg=null;
+VIEWS.chat=function(){
+  var th=S.threads.dr,h='';
+  h+='<div class="row card flat" style="padding:10px 12px">'+avatar(S.user.doctor)+'<div class="grow"><div class="b">'+esc(S.user.doctor)+'</div><div class="tiny muted">Dokter kamu · balas dalam 1×24 jam kerja</div></div><button class="pill ok" data-act="chatinfo">'+I.shield.replace('<svg','<svg style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2"')+' Tercatat</button></div>';
+  h+='<div class="chat">'+th.map(function(m){return '<div class="msg '+m.from+'">'+(m.img?'<img src="'+m.img+'" alt="Foto yang dikirim">':'')+esc(m.text)+(m.from!=='sys'?'<span class="ts">'+esc(fts(m.ts))+'</span>':'')+'</div>';}).join('')+'<div id="chatEnd"></div></div>';
+  h+=(pendingImg?'<div class="attprev"><img src="'+pendingImg+'" alt=""><span>Foto siap dikirim</span><button class="link" data-act="attclear">Hapus</button></div>':'');
+  h+='<div class="composer"><label class="att" aria-label="Lampirkan foto"><input type="file" accept="image/*" id="chatFile">'+I.att+'</label><textarea id="chatIn" rows="1" placeholder="Tulis pertanyaan untuk dokter…" aria-label="Pesan"></textarea><button class="send" data-act="send" aria-label="Kirim">'+I.send+'</button></div>';
+  h+='<div class="list card flat" style="padding:4px 16px"><a class="it" href="'+wa('Halo Surface, saya '+S.user.name+' ('+S.user.id+'). ')+'" target="_blank" rel="noopener" style="text-decoration:none;color:inherit"><span class="ico" style="color:#128C4A">'+I.wa+'</span><span class="body"><span class="t">Tim Surface di WhatsApp</span><span class="s">Jadwal, pembayaran, pertanyaan umum · '+esc(D.site.whatsapp_hours)+'</span></span><span class="chev">'+I.chev+'</span></a></div>';
+  h+='<p class="tiny muted">Untuk keadaan darurat (sesak, bengkak hebat, demam tinggi) jangan menunggu balasan. Hubungi klinik lewat WhatsApp atau layanan gawat darurat terdekat.</p>';
+  return h;
+};
+
+/* ---- loyalty ---- */
+var REWARDS=[
+  {id:'pdt',t:'Add-on PDT / LED di sesi berikutnya',c:2500},
+  {id:'skincare',t:'Kredit skincare Rp 100.000',c:1000},
+  {id:'eye',t:'Add-on Eye Catching',c:5500},
+  {id:'neck',t:'Add-on Tighten & Contour Neck',c:4000}
+];
+VIEWS.loyalty=function(){
+  var t=tierOf(S.points),nt=nextTier(S.points),h='';
+  h+='<div class="card accent"><div class="tier"><div><div class="eyebrow">Surface Habit · '+esc(t.name)+'</div><div class="pts num">'+S.points.toLocaleString('id-ID')+'</div><div class="small">poin · 1 poin per Rp 10.000</div></div><div class="center"><div class="hero-n num">'+S.streak+'</div><div class="tiny">bulan berturut</div></div></div>'+(nt?'<div class="bar" style="margin-top:14px;background:color-mix(in srgb,var(--hero-ink) 20%,transparent)"><i style="width:'+Math.round(S.points/nt.min*100)+'%;background:var(--hero-chip)"></i></div><div class="tiny" style="margin-top:6px">'+(nt.min-S.points).toLocaleString('id-ID')+' poin lagi ke '+nt.name+'</div>':'<div class="tiny" style="margin-top:10px">Tingkat tertinggi. Terima kasih sudah konsisten.</div>')+'</div>';
+  h+='<div class="card"><h3>Yang kamu dapat di tingkat '+esc(t.name)+'</h3><ul class="clean small" style="margin-top:8px"><li>Konsultasi dokter gratis, kapan pun</li><li>Pengingat interval dan tinjauan minggu ke-12</li>'+(t.code!=='start'?'<li>Prioritas slot akhir pekan</li><li>Satu sampel produk perawatan rumah tiap kunjungan</li>':'<li>Naik ke Habit: prioritas slot akhir pekan dan sampel produk tiap kunjungan</li>')+(t.code==='glow'?'<li>Facial ulang tahun (Hydraderm atau H2O)</li><li>Satu teman ikut konsultasi dan analisis kulit bersama</li>':'')+'</ul></div>';
+  h+='<div class="sec"><h2>Tukar poin</h2></div><div class="rewards">'+REWARDS.map(function(r){var ok=S.points>=r.c;return '<button class="reward" data-act="redeem" data-id="'+r.id+'"'+(ok?'':' disabled')+'><span class="t">'+esc(r.t)+'</span><span class="c">'+r.c.toLocaleString('id-ID')+' poin</span></button>';}).join('')+'</div>';
+  if(S.vouchers.length)h+='<div class="card soft"><h3>Voucher kamu</h3><ul class="clean small" style="margin-top:8px">'+S.vouchers.map(function(v){return '<li>'+esc(v.t)+' · tunjukkan kode <b>'+esc(v.code)+'</b> di klinik</li>';}).join('')+'</ul></div>';
+  h+='<div class="card panel"><div class="eyebrow">Ajak teman</div><h2>Kalian berdua dapat 300 poin</h2><p class="small muted" style="margin-top:4px">Saat temanmu selesai konsultasi dan treatment pertamanya. Sudah bergabung: '+S.referrals+' orang.</p><div class="row" style="margin-top:12px"><span class="code">'+esc(S.user.first.toUpperCase())+'-SURF</span><button class="btn sm ghost" data-act="copycode">Salin</button></div><a class="btn wa block" style="margin-top:10px" href="'+wa('Aku treatment di Surface Skin Habit. Konsultasi dokternya gratis, pakai kode '+S.user.first.toUpperCase()+'-SURF ya: https://surfaceskinhabit.com')+'" target="_blank" rel="noopener">'+I.wa+' Bagikan lewat WhatsApp</a></div>';
+  h+='<div class="card"><h3>Cara dapat poin</h3><ul class="clean small" style="margin-top:8px"><li>1 poin tiap Rp 10.000 treatment atau paket</li><li>+300 tiap teman yang bergabung</li><li>+100 ulasan Google setelah kunjungan</li><li>+200 kalau menyelesaikan paket sesuai interval</li></ul></div>';
+  h+='<div class="sec"><h2>Riwayat poin</h2></div><div class="list card flat" style="padding:4px 16px">'+S.pointLog.map(function(p){return '<div class="it"><span class="body"><span class="t">'+esc(p.label)+'</span><span class="s">'+esc(fd(p.date))+'</span></span><span class="b num" style="color:'+(p.delta<0?'var(--bad)':'var(--ok)')+'">'+(p.delta>0?'+':'')+p.delta.toLocaleString('id-ID')+'</span></div>';}).join('')+'</div>';
+  return h;
+};
+
+/* ---- notifications ---- */
+VIEWS.notif=function(){S.notifSeen=true;save();var n=notifs();return '<div class="list card flat" style="padding:4px 16px">'+n.map(function(x){return '<button class="it" data-go="'+x.go+'"><span class="ico"'+(x.warn?' style="color:var(--warn);background:var(--warn-soft)"':'')+'>'+x.ico+'</span><span class="body"><span class="t">'+esc(x.t)+'</span><span class="s">'+esc(x.s)+'</span></span><span class="chev">'+I.chev+'</span></button>';}).join('')+'</div><p class="tiny muted">Pengingat jadwal dan paket dikirim lewat WhatsApp juga. Atur di Akun › Notifikasi.</p>';};
+
+/* ---- intake ---- */
+VIEWS.intake=function(){
+  var f=S.intake,qs=[{k:'hamil',t:'Sedang hamil, menyusui, atau merencanakannya dalam 6 bulan ke depan?'},{k:'obat',t:'Isotretinoin atau obat jerawat resep, sekarang atau dalam 6 bulan terakhir?'},{k:'riwayat',t:'Riwayat keloid, cold sore, penyakit autoimun, atau obat pengencer darah?'},{k:'lain',t:'Treatment di tempat lain dalam 4 minggu terakhir, atau akan banyak kena matahari dalam 6 minggu ke depan?'}];
+  var h='<div class="card '+(f.formA?'soft':'panel')+'"><div class="row"><span class="ico" style="width:40px;height:40px;border-radius:12px;background:var(--card);display:flex;align-items:center;justify-content:center;color:var(--ok)">'+I.check+'</span><div class="grow"><div class="b">'+(f.formA?'Lengkap · diperbarui '+esc(fd(f.formA)):'Belum diisi')+'</div><div class="small muted">Persetujuan tindakan ditandatangani di klinik '+(f.consent?esc(fds(f.consent)):'saat kunjungan pertama')+'. NIK dan foto identitas hanya dicatat di meja depan, tidak lewat aplikasi.</div></div></div></div>';
+  h+='<div class="eyebrow">Skrining keamanan</div><p class="small muted">Jawaban "ya" tidak berarti ditolak. Ini supaya dokter memilih tindakan yang aman.</p><div class="stack">'+qs.map(function(q){return '<div class="card flat"><div class="small b" style="margin-bottom:8px">'+esc(q.t)+'</div><div class="aq-opts aq-yn"><button class="aq-opt'+(f.flags[q.k]==='ya'?' sel':'')+'" data-act="flag" data-k="'+q.k+'" data-v="ya">Ya</button><button class="aq-opt'+(f.flags[q.k]==='tidak'?' sel':'')+'" data-act="flag" data-k="'+q.k+'" data-v="tidak">Tidak</button></div></div>';}).join('')+'</div>';
+  h+='<label class="stack"><span class="eyebrow">Skincare yang sedang dipakai</span><textarea class="ta" id="inSkin" rows="2">'+esc(f.skincare)+'</textarea></label>';
+  h+='<label class="stack"><span class="eyebrow">Acara penting dalam waktu dekat? (tanggal)</span><input class="in" id="inEvent" type="date" value="'+esc(f.event||'')+'"></label><p class="tiny muted">Dokter tidak akan menjadwalkan tindakan dengan downtime terlalu dekat dengan tanggal ini.</p>';
+  h+='<button class="btn primary block" data-act="saveintake">Simpan</button>';
+  return h;
+};
+
+/* ---- account ---- */
+VIEWS.akun=function(){
+  var u=S.user,h='';
+  h+='<div class="row card flat" style="padding:14px"><span class="av" style="width:52px;height:52px;font-size:18px">'+initials(u.name)+'</span><div class="grow"><div class="b" style="font-size:16px">'+esc(u.name)+'</div><div class="small muted">'+esc(u.id)+' · pelanggan sejak '+esc(u.since)+'</div><div class="small muted">'+esc(u.phone)+' · '+esc(u.email)+'</div></div></div>';
+  h+='<div class="list card flat" style="padding:4px 16px">'+
+    '<button class="it" data-go="intake"><span class="ico">'+I.clip+'</span><span class="body"><span class="t">Form pra-kunjungan</span><span class="s">'+(S.intake.formA?'Lengkap · '+esc(fds(S.intake.formA)):'Belum diisi')+'</span></span><span class="chev">'+I.chev+'</span></button>'+
+    '<button class="it" data-go="riwayat"><span class="ico">'+I.hist+'</span><span class="body"><span class="t">Riwayat & rekam perawatan</span><span class="s">Ringkasan dari rekam medis klinik</span></span><span class="chev">'+I.chev+'</span></button>'+
+    '<button class="it" data-go="struk"><span class="ico">'+I.receipt+'</span><span class="body"><span class="t">Struk & pembayaran</span><span class="s">'+S.receipts.length+' transaksi</span></span><span class="chev">'+I.chev+'</span></button>'+
+    '<button class="it" data-go="loyalty"><span class="ico">'+I.gift+'</span><span class="body"><span class="t">Surface Habit & ajak teman</span><span class="s">'+S.points.toLocaleString('id-ID')+' poin · '+esc(tierOf(S.points).name)+'</span></span><span class="chev">'+I.chev+'</span></button>'+
+    '<button class="it" data-go="klinik"><span class="ico">'+I.map+'</span><span class="body"><span class="t">Klinik saya: '+esc(clinic(u.clinic).short)+'</span><span class="s">Dokter: '+esc(u.doctor)+'</span></span><span class="chev">'+I.chev+'</span></button></div>';
+  h+='<div class="sec"><h2>Notifikasi</h2></div><div class="list card flat" style="padding:4px 16px">'+[{k:'remind',t:'Pengingat jadwal',s:'H-1 dan 2 jam sebelum, lewat aplikasi dan WhatsApp'},{k:'expiry',t:'Paket akan berakhir',s:'30 dan 7 hari sebelum kedaluwarsa'},{k:'chat',t:'Balasan dokter',s:'Saat dokter membalas chat'},{k:'promo',t:'Info program & edukasi',s:'Maksimal 2 kali sebulan'}].map(function(p){return '<div class="it"><span class="body"><span class="t">'+p.t+'</span><span class="s">'+p.s+'</span></span><button class="tg'+(S.prefs[p.k]?' on':'')+'" role="switch" aria-checked="'+(S.prefs[p.k]?'true':'false')+'" aria-label="'+p.t+'" data-act="pref" data-k="'+p.k+'"><i></i></button></div>';}).join('')+'</div>';
+  h+='<div class="card soft small"><h3>Data & privasi</h3><p class="muted" style="margin-top:6px">Data kesehatanmu adalah data pribadi spesifik (UU PDP 27/2022). Rekam medis disimpan klinik 25 tahun sesuai Permenkes 24/2022 dan tidak dihapus lewat aplikasi. Untuk permintaan salinan atau koreksi data, hubungi klinik.</p><a class="link" style="display:inline-block;margin-top:8px" href="'+wa('Halo Surface, saya '+u.name+' ('+u.id+') ingin mengajukan permintaan terkait data pribadi saya: ')+'" target="_blank" rel="noopener">Ajukan permintaan data</a></div>';
+  h+='<button class="btn ghost block" data-act="reset">Reset data demo</button><div class="demo">Surface app · prototipe '+esc(D.built)+' · katalog yang sama dengan situs web</div>';
+  return h;
+};
+
+VIEWS.klinik=function(){
+  return '<div class="stack">'+D.clinics.map(function(c){var mine=c.code===S.user.clinic;return '<div class="card'+(mine?' panel':'')+'" style="overflow:hidden;padding:0"><div class="ph wide" style="border-radius:0;'+ph('clinic_'+c.code)+'"></div><div style="padding:16px 20px 20px"><div class="row"><div class="grow"><div class="b">'+esc(c.name)+'</div><div class="small muted">'+esc(c.address)+'</div><div class="small muted" style="margin-top:4px">'+esc(c.hours)+'</div></div>'+(mine?'<span class="pill acc">Klinik saya</span>':'')+'</div><div class="btns" style="margin-top:10px"><a class="btn ghost sm" href="'+esc(c.maps)+'" target="_blank" rel="noopener">'+I.map+' Peta</a>'+(mine?'':'<button class="btn soft sm" data-act="setclinic" data-c="'+c.code+'">Jadikan klinik saya</button>')+'</div></div></div>';}).join('')+'</div><p class="tiny muted">Dokter di setiap klinik: '+esc(D.doctors.map(function(d){return d.name+' ('+(d.clinics.length?d.clinics.join(', '):'semua')+')';}).join('; '))+'.</p>';
+};
+
+/* ---------- sheet ---------- */
+function sheet(html){var s=document.getElementById('sheet');document.getElementById('sheetPane').innerHTML='<div class="grab"></div>'+html;s.classList.add('open');}
+function closeSheet(){document.getElementById('sheet').classList.remove('open');}
+
+/* ---------- actions ---------- */
+function startBooking(patch){S.booking=null;var b=B();Object.keys(patch).forEach(function(k){b[k]=patch[k];});save();go('booking');}
+function rebook(){var ap=activePkgs();if(ap.length){var p=ap[0];startBooking({what:'paket',pkg:p.id,offer:p.offer,clinic:p.clinic||S.user.clinic,doctor:S.user.doctor,step:4});}else{var lv=S.visits.filter(function(v){return v.offer!=='Konsultasi dokter gratis';})[0];if(lv)startBooking({what:'program',offer:lv.offer,clinic:lv.clinic,doctor:lv.doctor,step:4});else startBooking({what:'konsul',step:2});}}
+
+document.addEventListener('click',function(e){
+  var el=e.target.closest('[data-go],[data-act]');
+  if(e.target.id==='sheet'){closeSheet();return;}
+  if(!el)return;
+  if(el.dataset.go){closeSheet();go(el.dataset.go);return;}
+  var a=el.dataset.act,b;
+  switch(a){
+    case 'back':go(PARENT[R]||'home');break;
+    case 'rebook':rebook();break;
+    case 'bookwhat':startBooking({what:el.dataset.what,step:2});break;
+    case 'pickpkg':var p=S.packages.filter(function(x){return x.id===el.dataset.id;})[0];startBooking({what:'paket',pkg:p.id,offer:p.offer,clinic:p.clinic||S.user.clinic,step:2});break;
+    case 'pickoffer':startBooking({what:'program',offer:el.dataset.o,step:2});break;
+    case 'bookoffer':startBooking({what:'program',offer:el.dataset.o,step:2});break;
+    case 'pickfirst':startBooking({what:'first',first:el.dataset.n,step:2});break;
+    case 'ctab':B().tab=el.dataset.c;save();render();break;
+    case 'pickclinic':b=B();b.clinic=el.dataset.c;if(b.doctor){var d=D.doctors.filter(function(x){return x.name===b.doctor;})[0];if(d&&d.clinics.length&&d.clinics.indexOf(b.clinic)<0)b.doctor='';}b.step=3;save();render();break;
+    case 'pickdoc':b=B();b.doctor=el.dataset.d;b.step=4;b.date=null;b.time=null;save();render();break;
+    case 'pickdate':b=B();b.date=el.dataset.d;b.time=null;save();render();break;
+    case 'picktime':b=B();b.time=el.dataset.t;save();render();break;
+    case 'next':b=B();b.step=Math.min(5,b.step+1);save();render();break;
+    case 'prev':b=B();b.step=Math.max(1,b.step-1);save();render();break;
+    case 'confirm':b=B();var ta=document.getElementById('bnote');b.note=ta?ta.value.trim():'';var pk=b.pkg?S.packages.filter(function(x){return x.id===b.pkg;})[0]:null;
+      var appt={id:b.editId||('a'+Date.now()),date:b.date,time:b.time,what:bookingLabel(b),pkg:b.pkg,session:pk?pk.used+1:null,total:pk?pk.total:null,clinic:b.clinic,doctor:b.doctor,status:'confirmed',note:b.note,kind:b.what};
+      var wasEdit=!!b.editId;S.appointments=S.appointments.filter(function(x){return x.id!==appt.id;});S.appointments.push(appt);S.notifSeen=false;b.editId=appt.id;b.step=6;save();render();toast(wasEdit?'Jadwal diubah':'Booking tersimpan');break;
+    case 'bookdone':S.booking=null;save();go('home');break;
+    case 'appt':var ap=S.appointments.filter(function(x){return x.id===el.dataset.id;})[0];if(!ap)break;
+      sheet('<h2>'+esc(ap.what)+'</h2><p class="small muted">'+esc(fdl(ap.date))+' · '+esc(ft(ap.time))+' WIB · '+esc(clinic(ap.clinic).name)+'</p><div class="stack" style="margin-top:6px"><button class="btn primary block" data-act="resched" data-id="'+ap.id+'">Ubah waktu</button><a class="btn ghost block" href="'+wa('Halo Surface, saya '+S.user.name+' mau mengubah jadwal '+ap.what+' tanggal '+fd(ap.date)+' '+ft(ap.time)+' di '+clinic(ap.clinic).short+'.')+'" target="_blank" rel="noopener">Hubungi klinik</a><button class="btn ghost block" style="color:var(--bad)" data-act="cancel1" data-id="'+ap.id+'">Batalkan jadwal</button></div><p class="tiny muted">Perubahan paling lambat H-1. Sesi paket tidak terpotong kalau dibatalkan tepat waktu.</p>');break;
+    case 'resched':var ar=S.appointments.filter(function(x){return x.id===el.dataset.id;})[0];closeSheet();startBooking({what:ar.kind||'program',pkg:ar.pkg,offer:ar.pkg?ar.what:(ar.kind==='program'?ar.what:null),first:ar.kind==='first'?ar.what.split(' · ')[0]:null,clinic:ar.clinic,doctor:ar.doctor,step:4,editId:ar.id,date:ar.date});break;
+    case 'cancel1':sheet('<h2>Batalkan jadwal ini?</h2><p class="small muted">Kamu bisa booking lagi kapan saja. Sisa sesi paket tetap utuh.</p><div class="btns" style="margin-top:8px"><button class="btn ghost" data-act="closesheet">Jangan</button><button class="btn primary" style="background:var(--bad)" data-act="cancel2" data-id="'+el.dataset.id+'">Ya, batalkan</button></div>');break;
+    case 'cancel2':S.appointments=S.appointments.filter(function(x){return x.id!==el.dataset.id;});save();closeSheet();render();toast('Jadwal dibatalkan');break;
+    case 'closesheet':closeSheet();break;
+    case 'rebookv':var v=S.visits.filter(function(x){return x.id===el.dataset.id;})[0];var pkv=v.pkg?S.packages.filter(function(x){return x.id===v.pkg&&remaining(x)>0;})[0]:null;startBooking(pkv?{what:'paket',pkg:pkv.id,offer:v.offer,clinic:v.clinic,doctor:v.doctor,step:4}:{what:'program',offer:v.offer,clinic:v.clinic,doctor:v.doctor,step:4});break;
+    case 'receipt':var r=S.receipts.filter(function(x){return x.id===el.dataset.id;})[0];sheet('<div class="eyebrow">Struk '+esc(r.no)+'</div><h2>'+esc(r.label)+'</h2><dl class="kv" style="margin-top:8px"><dt>Tanggal</dt><dd>'+esc(fdl(r.date))+'</dd><dt>Klinik</dt><dd>'+esc(clinic(r.clinic).name)+'</dd><dt>Metode</dt><dd>'+esc(r.method)+'</dd><dt>Jumlah</dt><dd class="num">'+rp(r.amount)+'</dd><dt>Poin</dt><dd>+'+Math.floor(r.amount/10000)+'</dd></dl><button class="btn ghost block" style="margin-top:8px" data-act="emailreceipt">Kirim ke '+esc(S.user.email)+'</button>');break;
+    case 'emailreceipt':closeSheet();toast('Struk dikirim ke email');break;
+    case 'aqopt':var Q=aqList(),q=Q[Astep],vv=el.dataset.v;if(q.type==='multi'){var cur=Aans[q.id]||[];Aans[q.id]=cur.indexOf(vv)>=0?cur.filter(function(x){return x!==vv;}):cur.concat([vv]);render();}else{Aans[q.id]=vv;if(q.id==='q1')delete Aans.q2;Astep++;render();}break;
+    case 'aqnext':var tx=document.getElementById('aqtext');if(tx)Aans[aqList()[Astep].id]=tx.value.trim();Astep++;render();break;
+    case 'aqback':Astep=Math.max(0,Astep-1);render();break;
+    case 'aqreset':Aans={};Astep=0;S.analysis=null;save();render();break;
+    case 'aqsend':var rr=S.analysis;S.threads.dr.push({from:'me',ts:nowTs(),text:'Hasil analisis kulit '+fd(rr.date)+': '+rr.concernName+'. Titik mulai yang disarankan: '+rr.offer+' ('+rr.offerIncludes+').'+(rr.flags.length?' Perlu dicek: '+rr.flags.join('; ')+'.':'')+' Menurut dokter cocok?'});save();Aans={};Astep=0;go('chat');toast('Hasil dikirim ke dokter');break;
+    case 'send':var inp=document.getElementById('chatIn'),txt=inp?inp.value.trim():'';if(!txt&&!pendingImg)break;S.threads.dr.push({from:'me',ts:nowTs(),text:txt||'(foto)',img:pendingImg||null});pendingImg=null;save();render();
+      setTimeout(function(){S.threads.dr.push({from:'sys',ts:nowTs(),text:'Diterima. '+S.user.doctor+' membalas dalam 1×24 jam kerja. Dicatat ke rekam medis.'});save();if(R==='chat')render();},900);break;
+    case 'attclear':pendingImg=null;render();break;
+    case 'chatinfo':sheet('<h2>Telekonsultasi tercatat</h2><p class="small">Percakapan di sini adalah bagian dari rekam medis kamu: dijawab oleh dokter yang menangani, disimpan 25 tahun sesuai aturan rekam medis elektronik, dan bisa dirujuk di kunjungan berikutnya.</p><ul class="clean small"><li>Dokter membalas dalam 1×24 jam kerja</li><li>Foto hanya untuk dokter, tidak dibagikan ke tim lain</li><li>Jadwal, pembayaran dan pertanyaan umum lewat WhatsApp tim Surface</li><li>Darurat: jangan menunggu balasan di sini</li></ul><button class="btn soft block" data-act="closesheet">Mengerti</button>');break;
+    case 'redeem':var rw=REWARDS.filter(function(x){return x.id===el.dataset.id;})[0];sheet('<h2>Tukar '+rw.c.toLocaleString('id-ID')+' poin?</h2><p class="small muted">'+esc(rw.t)+'. Voucher muncul di halaman ini dan dipakai saat check-in di klinik.</p><div class="btns" style="margin-top:8px"><button class="btn ghost" data-act="closesheet">Batal</button><button class="btn primary" data-act="redeem2" data-id="'+rw.id+'">Tukar</button></div>');break;
+    case 'redeem2':var rw2=REWARDS.filter(function(x){return x.id===el.dataset.id;})[0];S.points-=rw2.c;S.pointLog.unshift({date:iso(today()),label:'Tukar: '+rw2.t,delta:-rw2.c});S.vouchers.push({t:rw2.t,code:'SH-'+String(hash(rw2.id+Date.now())).slice(0,6)});save();closeSheet();render();toast('Voucher siap dipakai');break;
+    case 'copycode':var code=S.user.first.toUpperCase()+'-SURF';if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(code).then(function(){toast('Kode disalin: '+code);},function(){toast('Kode: '+code);});}else toast('Kode: '+code);break;
+    case 'flag':S.intake.flags[el.dataset.k]=el.dataset.v;save();render();break;
+    case 'saveintake':var sk=document.getElementById('inSkin'),ev=document.getElementById('inEvent');S.intake.skincare=sk?sk.value.trim():'';S.intake.event=ev?ev.value:'';S.intake.formA=iso(today());save();toast('Form tersimpan');go('akun');break;
+    case 'pref':S.prefs[el.dataset.k]=!S.prefs[el.dataset.k];save();render();break;
+    case 'setclinic':S.user.clinic=el.dataset.c;save();render();toast('Klinik utama diubah');break;
+    case 'reset':sheet('<h2>Reset data demo?</h2><p class="small muted">Booking, chat dan poin kembali ke contoh awal.</p><div class="btns" style="margin-top:8px"><button class="btn ghost" data-act="closesheet">Batal</button><button class="btn primary" data-act="reset2">Reset</button></div>');break;
+    case 'reset2':S=seed();save();closeSheet();Aans={};Astep=0;go('home');render();toast('Data demo direset');break;
+  }
+});
+document.addEventListener('change',function(e){
+  if(e.target.id==='chatFile'&&e.target.files&&e.target.files[0]){var f=e.target.files[0];if(!/^image\//.test(f.type))return;var rd=new FileReader();rd.onload=function(){var img=new Image();img.onload=function(){var c=document.createElement('canvas'),s=Math.min(1,640/Math.max(img.width,img.height));c.width=img.width*s;c.height=img.height*s;c.getContext('2d').drawImage(img,0,0,c.width,c.height);pendingImg=c.toDataURL('image/jpeg',.7);render();};img.src=rd.result;};rd.readAsDataURL(f);}
+});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeSheet();if(e.key==='Enter'&&!e.shiftKey&&e.target.id==='chatIn'){e.preventDefault();var b=document.querySelector('[data-act=send]');if(b)b.click();}});
+
+/* ---------- boot ---------- */
+S=load()||seed();
+if(!S.vouchers)S.vouchers=[];
+save();
+render();
+})();
+</script>
